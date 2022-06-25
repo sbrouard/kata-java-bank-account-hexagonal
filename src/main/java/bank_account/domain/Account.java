@@ -26,4 +26,8 @@ public class Account {
         this.amount += amount;
     }
 
+    public void delAmount(long amount) {
+        this.amount -= amount;
+    }
+
 }
