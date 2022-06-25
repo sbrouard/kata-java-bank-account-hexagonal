@@ -2,7 +2,36 @@
 
 Implémentation en Java 17 / Spring du kata Bank
 Account (https://gitlab.com/exalt-it-dojo/katas-java/-/tree/main/BankAccount).
+
 Projet développé avec lombok.
+
+## Build & Run
+
+### Maven
+
+Il s'agit d'un projet maven. Il est possible de le lancer en ligne de commande ou depuis votre IDE.
+Testé avec maven 3.6.0.
+
+### Docker
+
+Le Dockerfile build l'application et génère une image qui l'exécute.
+
+Lors du premier build, le téléchargement de l'image openjdk:17-alpine peut prendre quelques minutes.
+
+Compter une minute pour le build du projet maven (en fonction de votre environnement).
+
+- Pour build l'image docker : se placer à la racine du projet et exécuter :
+  `docker build -t bank-account-kata .`
+- Pour lancer l'application (écoutant sur le port 80) :
+  `docker run -d -p 80:8080 -it bank-account-kata`
+
+## Utiliser l'API
+
+- Créer un compte :
+  `curl -XPOST localhost:80/accounts` (retourne le compte créé)
+- Effectuer un dépôt sur un compte : `curl -XPOST localhost:80/accounts/<id>/deposit/<amount>`
+  (retourne le montant contenu sur le compte après l'opération)
+- Récupérer un compte : `curl localhost:80/accounts/<id>`
 
 Ci-dessous la description du kata.
 
