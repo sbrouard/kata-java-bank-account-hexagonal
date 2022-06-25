@@ -3,6 +3,7 @@ package bank_account.adapter.in.api;
 import bank_account.domain.Account;
 import bank_account.port.in.AccountManager;
 import bank_account.port.in.DepositHandler;
+import bank_account.port.in.WithdrawalHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,6 +27,9 @@ class BankAccountControllerTest {
 
     @MockBean
     private DepositHandler depositHandlerMock;
+
+    @MockBean
+    private WithdrawalHandler withdrawalHandler;
 
     @Test
     void createAccount() throws Exception {
@@ -54,5 +58,14 @@ class BankAccountControllerTest {
         mockMvc.perform(post("/accounts/1/deposit/42"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("42"));
+    }
+
+    @Test
+    void withdraw() throws Exception {
+        when(withdrawalHandler.withdraw(1, 42)).thenReturn(38L);
+
+        mockMvc.perform(post("/accounts/1/withdraw/42"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("38"));
     }
 }
