@@ -1,5 +1,6 @@
 package bank_account.adapter.out.persistence;
 
+import bank_account.adapter.out.persistence.data.mapping.AccountMapper;
 import bank_account.domain.Account;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,6 @@ class AccountPersistenceAdapterTest {
     @Test
     void update() {
         Account account = new Account(35, 200, null);
-        assertEquals(account, accountPersistenceAdapter.update(account));
+        assertEquals(account, accountPersistenceAdapter.save(account));
     }
 }

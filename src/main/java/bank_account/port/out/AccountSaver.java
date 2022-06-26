@@ -2,8 +2,8 @@ package bank_account.port.out;
 
 import bank_account.domain.Account;
 
-public interface AccountUpdater {
+public interface AccountSaver {
 
-    Account update(Account account);
+    Account save(Account account);
 
 }

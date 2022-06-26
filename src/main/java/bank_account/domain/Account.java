@@ -1,5 +1,6 @@
 package bank_account.domain;
 
+import bank_account.common.exception.IllegalAmountException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class Account {
+public final class Account {
     private final long id;
 
     // Amount in cents (100 = 1€)
@@ -23,11 +24,9 @@ public class Account {
     }
 
     public void addAmount(long amount) {
+        if (this.amount + amount < 0) {
+            throw new IllegalAmountException("Withdrawal amount is bigger than account amount");
+        }
         this.amount += amount;
     }
-
-    public void delAmount(long amount) {
-        this.amount -= amount;
-    }
-
 }

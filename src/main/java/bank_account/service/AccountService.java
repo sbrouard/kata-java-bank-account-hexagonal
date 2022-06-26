@@ -3,7 +3,7 @@ package bank_account.service;
 import bank_account.domain.Account;
 import bank_account.port.in.AccountManager;
 import bank_account.port.out.AccountLoader;
-import bank_account.port.out.AccountUpdater;
+import bank_account.port.out.AccountSaver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class AccountService implements AccountManager {
 
     private final AccountLoader accountLoader;
-    private final AccountUpdater accountUpdater;
+    private final AccountSaver accountSaver;
 
     @Override
     public Account get(long accountId) {
@@ -22,6 +22,6 @@ public class AccountService implements AccountManager {
     @Override
     public Account create() {
         Account account = new Account();
-        return accountUpdater.update(account);
+        return accountSaver.save(account);
     }
 }

@@ -2,12 +2,14 @@ package bank_account.adapter.out.persistence.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "OPERATION")
 public class OperationEntity {
@@ -16,7 +18,7 @@ public class OperationEntity {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private AccountEntity account;
 
     private Long amount;
