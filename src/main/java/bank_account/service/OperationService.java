@@ -5,20 +5,24 @@ import bank_account.common.exception.IllegalAmountException;
 import bank_account.domain.Account;
 import bank_account.domain.Operation;
 import bank_account.port.in.DepositHandler;
+import bank_account.port.in.HistoryHandler;
 import bank_account.port.in.WithdrawalHandler;
 import bank_account.port.out.AccountLoader;
+import bank_account.port.out.OperationLoader;
 import bank_account.port.out.OperationSaver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class OperationService implements DepositHandler, WithdrawalHandler {
+public class OperationService implements DepositHandler, WithdrawalHandler, HistoryHandler {
 
     private final AccountLoader accountLoader;
     private final OperationSaver operationSaver;
+    private final OperationLoader operationLoader;
 
     @Override
     public long deposit(long accountId, long amount) throws IllegalAmountException, AccountNotFoundException {
@@ -51,5 +55,10 @@ public class OperationService implements DepositHandler, WithdrawalHandler {
             throw new AccountNotFoundException("The account was not found");
         }
         return account;
+    }
+
+    @Override
+    public List<Operation> getHistory(long accountId) {
+        return operationLoader.getAll(accountId);
     }
 }
