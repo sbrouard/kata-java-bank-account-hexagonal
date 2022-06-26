@@ -28,7 +28,7 @@ class AccountPersistenceAdapterTest {
 
     @Test
     void update() {
-        Account account = new Account(35, 200, null);
+        Account account = new Account(35, 200);
         assertEquals(account, accountPersistenceAdapter.save(account));
     }
 }

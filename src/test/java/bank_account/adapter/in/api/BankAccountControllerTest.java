@@ -39,7 +39,7 @@ class BankAccountControllerTest {
 
     @Test
     void getAccount() throws Exception {
-        Account account = new Account(1, 0, null);
+        Account account = new Account(1, 0);
         when(accountManagerMock.get(1)).thenReturn(account);
         mockMvc.perform(get("/accounts/1"))
                 .andExpect(status().isOk());

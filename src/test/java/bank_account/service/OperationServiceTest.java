@@ -38,10 +38,10 @@ class OperationServiceTest {
 
     @Test
     void deposit() {
-        Account accout = new Account(35, 100, null);
+        Account accout = new Account(35, 100);
         when(accountLoaderMock.get(35)).thenReturn(accout);
 
-        Account accoutAfterDeposit = new Account(35, 42100, null);
+        Account accoutAfterDeposit = new Account(35, 42100);
         Operation operation = new Operation(accoutAfterDeposit, 42000, LocalDateTime.now());
         when(operationSaver.save(new Operation(accoutAfterDeposit, 42000, any()))).thenReturn(operation);
         assertEquals(42100, operationService.deposit(35, 42000));
@@ -59,10 +59,10 @@ class OperationServiceTest {
 
     @Test
     void withdraw() {
-        Account accout = new Account(35, 100, null);
+        Account accout = new Account(35, 100);
         when(accountLoaderMock.get(35)).thenReturn(accout);
 
-        Account accoutAfterWithdraw = new Account(35, 50, null);
+        Account accoutAfterWithdraw = new Account(35, 50);
         Operation operation = new Operation(accoutAfterWithdraw, -50, LocalDateTime.now());
         when(operationSaver.save(new Operation(accoutAfterWithdraw, -50, any()))).thenReturn(operation);
         assertEquals(50, operationService.withdraw(35, 50));
@@ -70,7 +70,7 @@ class OperationServiceTest {
 
     @Test
     void illegalWithdral() {
-        Account accout = new Account(35, 100, null);
+        Account accout = new Account(35, 100);
         when(accountLoaderMock.get(35)).thenReturn(accout);
         assertThrows(IllegalAmountException.class, () -> operationService.withdraw(35, 200));
     }

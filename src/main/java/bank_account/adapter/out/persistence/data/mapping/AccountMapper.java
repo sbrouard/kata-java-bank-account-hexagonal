@@ -14,7 +14,7 @@ public class AccountMapper {
      * @return A domain Account object
      */
     public Account mapEntityToDomainWithoutOperations(AccountEntity account) {
-        return new Account(account.getId(), account.getAmount(), null);
+        return new Account(account.getId(), account.getAmount());
     }
 
     /**
