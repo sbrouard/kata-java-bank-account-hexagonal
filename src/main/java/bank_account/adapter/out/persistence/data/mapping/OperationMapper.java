@@ -19,7 +19,7 @@ public class OperationMapper {
     public Operation mapEntityToDomain(OperationEntity operationEntity) {
         return new Operation(accountMapper.mapEntityToDomainWithoutOperations(operationEntity.getAccount()),
                 operationEntity.getAmount(),
-                operationEntity.getTimestamp());
+                operationEntity.getDate());
     }
 
     public OperationEntity mapDomainToEntity(Operation operation) {
@@ -31,7 +31,7 @@ public class OperationMapper {
             OperationEntity operationEntity = new OperationEntity();
             operationEntity.setAccount(accountEntity);
             operationEntity.setAmount(operation.amount());
-            operationEntity.setTimestamp(operation.timestamp());
+            operationEntity.setDate(operation.timestamp());
             return operationEntity;
         }
         throw new IllegalArgumentException("Operation should have an existing account");

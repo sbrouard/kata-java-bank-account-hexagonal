@@ -14,7 +14,7 @@ Testé avec maven 3.6.0.
 
 ### Docker
 
-Le Dockerfile build l'application et génère une image qui l'exécute.
+Le Dockerfile build le jar et génère une image qui exécute l'application.
 
 Lors du premier build, le téléchargement de l'image openjdk:17-alpine peut prendre quelques minutes.
 
@@ -32,8 +32,27 @@ Compter une minute pour le build du projet maven (en fonction de votre environne
 - Effectuer un dépôt sur un compte : `curl -XPOST localhost:80/accounts/<id>/deposit/<amount>`
   (retourne le montant contenu sur le compte après l'opération)
 - Récupérer un compte : `curl localhost:80/accounts/<id>`
+- Voir l'historique des opérations d'un compté : `curl localhost:80/accounts/<id>/history`
 
 Ci-dessous la description du kata.
+
+## Choix d'implémentation
+
+Quelques choix d'implémentations afin d'aller au plus simple :
+
+- Pas de gestion des utilisateurs :
+  - Un compte n'est pas associé à un client
+  - Pas de sécurité : tous les clients (et même non-clients) ont accès à tous les comptes
+- L'argent pousse dans les arbres : si un client veut déposer de l'argent, on le fait sans discuter et sans rien
+  demander en échange
+- L'argent par la fenêtre : dans la vraie vie on aimerait bien avoir de l'argent en échange d'un retrait, ici l'argent
+  disparait juste du compte
+- La banque ne fait pas crédit : un client ne peut pas retirer plus que ce qu'il a sur son compte
+- Utilisation d'une base h2 : c'est rapide à déployer et le but n'est pas de passer en prod. Contrepartie : pas de
+  persistence entre les exécutions de l'application
+- Pas de requête paginée pour l'historique (simple manque de temps)
+- Tests : je n'ai pas employé le TDD pour ce projet afin de me concentrer sur le pattern d'architecture hexagonale (les
+  deux étant des découvertes pour moi)
 
 --------------------------------
 

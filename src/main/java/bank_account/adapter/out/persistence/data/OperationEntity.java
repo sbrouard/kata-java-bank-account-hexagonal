@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "OPERATION")
+@Table(name = "Operation")
 public class OperationEntity {
 
     @Id
@@ -24,6 +24,6 @@ public class OperationEntity {
     private Long amount;
 
     @Column(name = "Date")
-    private LocalDateTime timestamp;
+    private LocalDateTime date;
 
 }

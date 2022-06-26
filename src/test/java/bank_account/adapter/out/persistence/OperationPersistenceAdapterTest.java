@@ -10,8 +10,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @Import({OperationPersistenceAdapter.class, OperationMapper.class, AccountMapper.class})
@@ -25,6 +27,17 @@ class OperationPersistenceAdapterTest {
         Account account = new Account(56, 9000);
         Operation operation = new Operation(account, 1000, LocalDateTime.now());
         assertEquals(operation, operationPersistenceAdapter.save(operation));
+    }
+
+    @Test
+    void getAll() {
+        assertEquals(2, operationPersistenceAdapter.getAll(22).size());
+    }
+
+    @Test
+    void getAllOrderedTest() {
+        List<Operation> operationList = operationPersistenceAdapter.getAll(22);
+        assertTrue(operationList.get(0).timestamp().isAfter(operationList.get(1).timestamp()));
     }
 
 }
