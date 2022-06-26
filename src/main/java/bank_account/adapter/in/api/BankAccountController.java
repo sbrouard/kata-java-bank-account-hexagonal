@@ -1,10 +1,13 @@
 package bank_account.adapter.in.api;
 
+import bank_account.adapter.in.api.dto.OperationDTO;
+import bank_account.adapter.in.api.dto.mapping.OperationDTOMapper;
 import bank_account.common.exception.AccountNotFoundException;
 import bank_account.common.exception.IllegalAmountException;
 import bank_account.domain.Account;
 import bank_account.port.in.AccountManager;
 import bank_account.port.in.DepositHandler;
+import bank_account.port.in.HistoryHandler;
 import bank_account.port.in.WithdrawalHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +25,8 @@ public class BankAccountController {
     private final AccountManager accountManager;
     private final DepositHandler depositHandler;
     private final WithdrawalHandler withdrawalHandler;
+    private final HistoryHandler historyHandler;
+    private final OperationDTOMapper operationDTOMapper;
 
     @PostMapping
     @Transactional
@@ -73,6 +79,12 @@ public class BankAccountController {
         } catch (AccountNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/{accountId}/history")
+    public ResponseEntity<List<OperationDTO>> getHistory(@PathVariable("accountId") long accountId) {
+        List<OperationDTO> operationDTOList = this.operationDTOMapper.mapDomainListToDTOList(historyHandler.getHistory(accountId));
+        return ResponseEntity.ok(operationDTOList);
     }
 
 }

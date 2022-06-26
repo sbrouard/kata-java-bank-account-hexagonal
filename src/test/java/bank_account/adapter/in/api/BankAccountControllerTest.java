@@ -1,8 +1,10 @@
 package bank_account.adapter.in.api;
 
+import bank_account.adapter.in.api.dto.mapping.OperationDTOMapper;
 import bank_account.domain.Account;
 import bank_account.port.in.AccountManager;
 import bank_account.port.in.DepositHandler;
+import bank_account.port.in.HistoryHandler;
 import bank_account.port.in.WithdrawalHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +23,16 @@ class BankAccountControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private AccountManager accountManagerMock;
-
     @MockBean
     private DepositHandler depositHandlerMock;
-
     @MockBean
     private WithdrawalHandler withdrawalHandler;
+    @MockBean
+    private HistoryHandler historyHandler;
+    @MockBean
+    private OperationDTOMapper operationDTOMapper;
 
     @Test
     void createAccount() throws Exception {
